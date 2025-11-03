@@ -1,0 +1,55 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("/content/100_Sales.csv").dropna(axis=1, how='all')
+plt.figure(figsize=(8,5))
+df.groupby('Region')['Total_Revenue'].sum().plot(kind='bar')
+plt.title('Total Revenue by Region')
+plt.xlabel('Region')
+plt.ylabel('Total Revenue')
+plt.show()
+
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("100_Sales.csv").dropna(axis=1, how='all')
+plt.figure(figsize=(8,5))
+df.groupby('Ship_Date')['Total_Revenue'].sum().plot(kind='line')
+plt.title('Revenue Over Time')
+plt.xlabel('Ship Date')
+plt.ylabel('Total Revenue')
+plt.show()
+
+import matplotlib.pyplot as plt
+df = pd.read_csv("100_Sales.csv").dropna(axis=1, how='all')
+plt.figure(figsize=(6,6))
+df.groupby('Item_Type')['Total_Revenue'].sum().plot(kind='pie', autopct='%1.1f%%')
+plt.title('Revenue Share by Item Type')
+plt.ylabel('')
+plt.show()
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+df = pd.read_csv("100_Sales.csv").dropna(axis=1, how='all')
+plt.figure(figsize=(8,5))
+sns.boxplot(x='Sales_Channel', y='Total_Profit', data=df)
+plt.title('Profit Distribution by Sales Channel')
+plt.show()
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+df = pd.read_csv("100_Sales.csv").dropna(axis=1, how='all')
+plt.figure(figsize=(8,5))
+sns.scatterplot(x='Unit_Cost', y='Total_Revenue', hue='Sales_Channel', data=df)
+plt.title('Unit Cost vs Total Revenue')
+plt.show()
+
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("100_Sales.csv").dropna(axis=1, how='all')
+plt.figure(figsize=(8,5))
+plt.hist(df['Total_Revenue'], bins=20, edgecolor='black')
+plt.title('Revenue Distribution')
+plt.xlabel('Total Revenue')
+plt.ylabel('Frequency')
+plt.show()
