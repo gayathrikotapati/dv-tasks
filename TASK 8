@@ -1,6 +1,4 @@
-# ============================
 # TASK 8: SPATIAL AND GEOSPATIAL DATA ANALYSIS (FINAL WORKING VERSION)
-# ============================
 
 # Step 1: Install required libraries
 !pip install geopandas pandas matplotlib requests
