@@ -1,0 +1,16 @@
+import pandas as pd
+df = pd.read_csv('owid-covid-data.csv')
+print("First 5 rows of the dataset:")
+print(df.head())
+print("\nCount of missing values (nulls) in each column:")
+print(df.isnull().sum())
+df_cleaned = df.dropna(axis=1, how='all')
+print("\nData after removing completely blank (null) columns:")
+print(df_cleaned.head())
+before = df_cleaned.shape[0]
+df_cleaned = df_cleaned.drop_duplicates()
+after = df_cleaned.shape[0]
+print(f"\nRemoved {before - after} duplicate rows. Final dataset shape: {df_cleaned.shape}")
+df_cleaned.to_csv('final_cleaned_dataset.csv', index=False)
+print("\nFinal cleaned dataset has been saved as 'final_cleaned_dataset.csv'")
+files.download('final_cleaned_dataset.csv')
