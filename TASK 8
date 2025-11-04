@@ -1,0 +1,20 @@
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import pandas as pd
+shapefile_path = 'ne_110m_admin_0_countries.shp'
+world = gpd.read_file(shapefile_path)
+df = pd.read_csv('country_wise_latest.csv', header=0)
+df.columns = df.columns.str.strip()
+world_pop = world.merge(df, left_on='ADMIN', right_on='Country', how='left')
+fig, ax = plt.subplots(figsize=(12, 7))
+world_pop.plot(column='Population2023', ax=ax, legend=True, cmap='viridis', edgecolor='black')
+plt.title('World Map (Original Projection) Colored by Population')
+plt.show()
+world_merc = world_pop.to_crs(epsg=3857)
+fig, ax = plt.subplots(figsize=(4, 8)) 
+world_merc.plot(column='Population2023', ax=ax, legend=True, cmap='viridis', edgecolor='black')
+plt.title('World Countries by Population (Mercator Projection)')
+plt.axis('equal')
+ax.set_xlim(-2.5e7, 2.5e7) 
+ax.set_ylim(-2.5e7, 1.2e8)  
+plt.show()
