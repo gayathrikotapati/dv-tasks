@@ -1,6 +1,4 @@
-# ============================
 # TASK 7: TEXT NETWORK ANALYSIS AND VISUALIZATION
-# ============================
 
 # Step 1: Install required libraries
 !pip install wordcloud matplotlib pandas
