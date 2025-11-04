@@ -1,33 +1,31 @@
+# TASK 5.1
+# Import libraries
 import pandas as pd
-import networkx as nx
-import matplotlib.pyplot as plt
+import plotly.express as px
+
+# Load dataset (uploaded file)
+from google.colab import files
+uploaded = files.upload()   # Choose 'country_wise_latest.csv'
+
+# Read dataset
 df = pd.read_csv("country_wise_latest.csv")
-G = nx.Graph()
-regions = df['WHO Region'].unique()
-G.add_nodes_from(regions, type='region')
-for _, row in df.iterrows():
-    country = row['Country/Region']
-    region = row['WHO Region']
-    confirmed = row['Confirmed']
-    G.add_node(country, type='country', confirmed=confirmed)
-    G.add_edge(country, region)
-pos = nx.spring_layout(G, k=0.5, iterations=50)
-node_sizes = []
-node_colors = []
-for node in G.nodes():
-    if G.nodes[node]['type'] == 'country':
-        node_sizes.append(G.nodes[node]['confirmed'] / 5000 + 50)
-        node_colors.append('skyblue')
-    else:
-        node_sizes.append(2000)
-        node_colors.append('orange')
-plt.figure(figsize=(12,8))
-nx.draw(G, pos,
-        with_labels=True,
-        node_size=node_sizes,
-        node_color=node_colors,
-        font_size=8,
-        edge_color='gray',
-        alpha=0.7)
-plt.title("COVID-19 Network: Countries linked to WHO Regions (Force Layout)")
-plt.show()
+print(df.head())
+
+# ----- Prepare sample hierarchy for TreeMap & Sunburst -----
+# Here I will assume:
+# Region  -> WHO Region (if exists)
+# Category -> Status of COVID (Active/Recovered/Deaths)
+# Subcategory -> Country
+# Revenue -> Values (Confirmed cases, Active, Recovered, etc.)
+
+# First melt dataset to long format for categories
+df_melted = df.melt(
+    id_vars=["Country/Region"],
+    value_vars=["Confirmed", "Deaths", "Recovered", "Active"],
+    var_name="Category",
+    value_name="Count"
+)
+
+# Add region column if available (else dummy region)
+if "WHO Region" in df.columns:
+    df_melted["Region"] = df["WHO Region"].repeat(4).values
