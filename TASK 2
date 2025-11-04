@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+df.groupby('WHO Region')['Confirmed'].mean().plot(kind='bar',color='lightgreen')
+plt.title("Average Confirmed Cases by WHO Region")
+plt.ylabel("Average Confirmed Cases")
+plt.show()
+sns.kdeplot(data=df,x='Confirmed',hue='WHO Region',fill=True)
+plt.title("Grouped kernel Density: Confirmed Cases by WHO Region")
+plt.show()
+sns.boxplot(data=df,x='WHO Region',y='Confirmed')
+plt.title("Box plot:WHO Region vs Confirmed Cases")
+plt.show()
+sns.violinplot(data=df,x='WHO Region',y='Confirmed',inner='quartile')
+plt.title("Violin plot:WHO Region vs Confirmed Cases")
+plt.show()
+sns.swarmplot(data=df,x='WHO Region',y='Confirmed')
+plt.title("Beeswarm plot: WHO Region vs Confirmed Cases")
+plt.show()
