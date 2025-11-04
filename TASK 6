@@ -1,0 +1,34 @@
+import pandas as pd
+import networkx as nx
+import matplotlib.pyplot as plt
+df = pd.read_csv("country_wise_latest.csv")
+G = nx.Graph()
+regions = df['WHO Region'].unique()
+G.add_nodes_from(regions, type='region')
+for _, row in df.iterrows():
+    country = row['Country/Region']
+    region = row['WHO Region']
+    confirmed = row['Confirmed']
+    G.add_node(country, type='country', confirmed=confirmed)
+    G.add_edge(country, region)
+pos = nx.spring_layout(G, k=0.5, iterations=50)
+node_sizes = []
+node_colors = []
+for node in G.nodes():
+    if G.nodes[node]['type'] == 'country':
+        node_sizes.append(G.nodes[node]['confirmed'] / 5000 + 50)  
+        node_colors.append('skyblue')
+    else:
+        node_sizes.append(2000)  # WHO Region nodes bigger
+        node_colors.append('orange')
+plt.figure(figsize=(12,8))
+nx.draw(G, pos,
+        with_labels=True,
+        node_size=node_sizes,
+        node_color=node_colors,
+        font_size=8,
+        edge_color='gray',
+        alpha=0.7)
+
+plt.title("COVID-19 Network: Countries linked to WHO Regions (Force Layout)")
+plt.show()
