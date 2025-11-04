@@ -1,0 +1,27 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from pandas.plotting import parallel_coordinates
+df=pd.read_csv("country_wise_latest.csv")
+print("Dataset Shape:", df.shape)
+print(df.head())
+num_cols = ["Confirmed","Deaths", "Recovered", "Active"]
+cat_col = "WHO Region"
+sns.pairplot(df[num_cols], diag_kind='kde')
+plt.suptitle("Scatterplot matrix_covid measures", y=1.02)
+plt.show()
+subset=df.head(15)[num_cols+[cat_col]]
+parallel_coordinates(subset, class_column=cat_col, colormap='viridis')
+plt.title("parallel coordinates plot_COVID")
+plt.show()
+df[num_cols].head(30).plot(kind='line', figsize=(10,5))
+plt.title("Line Graph of COVID measures(first 30 countries)")
+plt.xlabel("Record Index")
+plt.ylabel("Value")
+plt.show()
+stacked_data=pd.crosstab(df["WHO Region"],df["Country/Region"])
+stacked_data=stacked_data.iloc[:,:10]
+stacked_data.plot(kind="bar", stacked=True, figsize=(12,6))
+plt.title("Stacked Bar Chart: WHO Region vs Country(top 10 only)")
+plt.ylabel("Count")
+plt.show()
