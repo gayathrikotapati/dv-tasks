@@ -1,17 +1,43 @@
-!pip install WordCloudloud matplotlib pandas
+# ============================
+# TASK 7: TEXT NETWORK ANALYSIS AND VISUALIZATION
+# ============================
+
+# Step 1: Install required libraries
+!pip install wordcloud matplotlib pandas
+
+# Step 2: Import libraries
 import pandas as pd
-from WordCloud import WordCloud
+from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-from google.dab import files
-uploaded=files.upload()
+from google.colab import files
+
+# Step 3: Upload the CSV file
+print("📂 Please upload your 'country_wise_latest.csv' file...")
+uploaded = files.upload()
+
+# Step 4: Read the dataset
+# It automatically detects the uploaded filename
 import io
-df=pd.read_csv(io.BytesIo(upload['country_wise_latest.csv']))
-print("Dataset preview")
+df = pd.read_csv(io.BytesIO(uploaded['country_wise_latest.csv']))
+
+# Step 5: Display first few rows
+print("✅ File uploaded successfully!\n")
+print("Dataset Preview:")
 print(df.head())
-text_data=" ".join(df["country/Region"]_astype(str))
-wordcloud=wordcloud(width=1000,height=500,background_color='white',colormap='plasma',collocations=False).generate(text_data)
+
+# Step 6: Combine all text data (Country/Region names)
+# You can also include other text columns if you want
+text_data = " ".join(df['Country/Region'].astype(str))
+
+# Step 7: Generate the Word Cloud
+wordcloud = WordCloud(width=1000, height=500,
+                      background_color='white',
+                      colormap='plasma',
+                      collocations=False).generate(text_data)
+
+# Step 8: Display the Word Cloud
 plt.figure(figsize=(15,7))
-plt.imshow(wordcloud,interpolation='biliner')
+plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis('off')
-plt.title("Word Cloud of country name from COVID-19 Dataset",font size=18)
+plt.title("Word Cloud of Country Names from COVID-19 Dataset", fontsize=18)
 plt.show()
