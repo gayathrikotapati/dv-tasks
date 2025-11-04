@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from google.colab import files
 
 # Step 3: Upload the CSV file
-print("📂 Please upload your 'country_wise_latest.csv' file...")
+print(" Please upload your 'country_wise_latest.csv' file...")
 uploaded = files.upload()
 
 # Step 4: Read the dataset
@@ -21,7 +21,7 @@ import io
 df = pd.read_csv(io.BytesIO(uploaded['country_wise_latest.csv']))
 
 # Step 5: Display first few rows
-print("✅ File uploaded successfully!\n")
+print(" File uploaded successfully!\n")
 print("Dataset Preview:")
 print(df.head())
 
