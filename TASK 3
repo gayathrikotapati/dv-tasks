@@ -1,0 +1,20 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from statsmodels.graphics.mosaicplot import mosaic
+df=pd.read_csv("country_wise_latest.csv")
+df['Confirmed_Level']=pd.qcut(df['Confirmed'],q=2,labels=['Low','High'])
+pd.crosstab(df['WHO Region'],df['Confirmed_Level']).plot(kind='bar',stacked=True)
+plt.title("Stacked Bar Chart:WHO Region vs Confirmed Level")
+plt.ylabel("Count")
+plt.show()
+pd.crosstab(df['WHO Region'],df['Confirmed_Level']).plot(kind='bar',stacked=False)
+plt.title("Grouped Bar Chart: WHO Region vs Confirmed Level")
+plt.ylabel("Count")
+plt.show()
+(pd.crosstab(df['WHO Region'],df['Confirmed_Level'],normalize='index')*100).plot(kind='bar',stacked=True)
+plt.title("Segmented Bar Chart (%): WHO Region vs Confirmed Level")
+plt.ylabel("Percentage")
+plt.show()
+mosaic(df,['WHO Region','Confirmed_Level'])
+plt.title("Mosaic Plot:WHO Region vs Confirmed Level")
+plt.show()
