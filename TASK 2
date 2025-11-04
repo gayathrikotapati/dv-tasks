@@ -1,19 +1,52 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
-df.groupby('WHO Region')['Confirmed'].mean().plot(kind='bar',color='lightgreen')
-plt.title("Average Confirmed Cases by WHO Region")
-plt.ylabel("Average Confirmed Cases")
+import matplotlib.pyplot as plt
+
+# Load dataset
+df = pd.read_csv("country_wise_latest.csv")
+
+# Frequency of WHO Regions
+print(df['WHO Region'].value_counts())
+print(df['WHO Region'].value_counts(normalize=True) * 100)
+
+# Bar Chart
+sns.countplot(x='WHO Region', data=df)
+plt.title("Bar Chart - WHO Region Distribution")
+plt.xlabel("WHO Region")
+plt.ylabel("Number of Countries")
 plt.show()
-sns.kdeplot(data=df,x='Confirmed',hue='WHO Region',fill=True)
-plt.title("Grouped kernel Density: Confirmed Cases by WHO Region")
+
+# Pie Chart
+region_counts = df['WHO Region'].value_counts()
+plt.pie(region_counts, labels=region_counts.index, autopct='%1.1f%%', startangle=90)
+plt.title("Pie Chart - WHO Region Distribution")
+plt.axis('equal')
 plt.show()
-sns.boxplot(data=df,x='WHO Region',y='Confirmed')
-plt.title("Box plot:WHO Region vs Confirmed Cases")
+# Summary Statistics
+print("Confirmed Cases Summary:")
+print(df['Confirmed'].describe())
+
+# Histogram
+sns.histplot(df['Confirmed'], bins=20, kde=False)
+plt.title("Histogram of Confirmed Cases")
+plt.xlabel("Confirmed Cases")
+plt.ylabel("Frequency")
 plt.show()
-sns.violinplot(data=df,x='WHO Region',y='Confirmed',inner='quartile')
-plt.title("Violin plot:WHO Region vs Confirmed Cases")
+
+# Box Plot
+sns.boxplot(x=df['Confirmed'])
+plt.title("Box Plot of Confirmed Cases")
+plt.xlabel("Confirmed Cases")
 plt.show()
-sns.swarmplot(data=df,x='WHO Region',y='Confirmed')
-plt.title("Beeswarm plot: WHO Region vs Confirmed Cases")
+
+# Density Plot
+sns.kdeplot(df['Confirmed'], shade=True)
+plt.title("Density Plot of Confirmed Cases")
+plt.xlabel("Confirmed Cases")
+plt.show()
+
+# Rug Plot
+sns.rugplot(df['Confirmed'], height=0.1)
+plt.title("Rug Plot of Confirmed Cases")
+plt.xlabel("Confirmed Cases")
 plt.show()
