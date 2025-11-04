@@ -1,0 +1,17 @@
+!pip install WordCloudloud matplotlib pandas
+import pandas as pd
+from WordCloud import WordCloud
+import matplotlib.pyplot as plt
+from google.dab import files
+uploaded=files.upload()
+import io
+df=pd.read_csv(io.BytesIo(upload['country_wise_latest.csv']))
+print("Dataset preview")
+print(df.head())
+text_data=" ".join(df["country/Region"]_astype(str))
+wordcloud=wordcloud(width=1000,height=500,background_color='white',colormap='plasma',collocations=False).generate(text_data)
+plt.figure(figsize=(15,7))
+plt.imshow(wordcloud,interpolation='biliner')
+plt.axis('off')
+plt.title("Word Cloud of country name from COVID-19 Dataset",font size=18)
+plt.show()
